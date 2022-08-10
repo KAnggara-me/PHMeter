@@ -85,9 +85,10 @@ void loop() {
   }
   //  cek PH Air setiap 30 detik
   unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= 10000) {
+  if (currentMillis - previousMillis >= 30000) {
     // save the last time you blinked the LED
     previousMillis = currentMillis;
+    bacaPH();
     cekPH();
   }
   // wait 500 milliseconds
@@ -116,22 +117,25 @@ void printLocalTime() {
   Serial.println(timeWeekDay);
 }
 
-void cekPH() {
+void bacaPH() {
   phAir = random(645, 755) / 100.0;
   Serial.println("PH Saat ini => " + String(phAir));
+}
+
+void cekPH() {
   if ((phAir >= PHMax) && !PHTinggi) {
-    Serial.println("PH AIR Tinggi");
-    myBot.sendMessage(GroupID, "PH AIR Tinggi => " + String(phAir));
+    Serial.println("PH Air Tinggi");
+    myBot.sendMessage(GroupID, "PH Air Tinggi => " + String(phAir));
     PHTinggi = true;
     PHRendah = false;
   } else if ((phAir <= PHMin) && !PHRendah) {
-    Serial.println("PH AIR Rendah");
-    myBot.sendMessage(GroupID, "PH AIR Rendah => " + String(phAir));
+    Serial.println("PH Air Rendah");
+    myBot.sendMessage(GroupID, "PH Air Rendah => " + String(phAir));
     PHRendah = true;
     PHTinggi = false;
   } else if ((phAir >= PHMin) && (phAir <= PHMax) && (PHTinggi || PHRendah)) {
-    Serial.println("PH AIR Telah Normal");
-    myBot.sendMessage(GroupID, "PH AIR Telah Normal => " + String(phAir));
+    Serial.println("PH Air Telah Normal");
+    myBot.sendMessage(GroupID, "PH Air Telah Normal => " + String(phAir));
     PHTinggi = false;
     PHRendah = false;
   }
