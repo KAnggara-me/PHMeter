@@ -1,7 +1,7 @@
 /**********************************************************************************/
 //WiFi Section
-#define WIFI_SSID "KAnggara75v7"  // WiFi Name
-#define WIFI_PASS "duaakar3"     // WiFi Pass
+#define WIFI_SSID "Kos_oren"  // WiFi Name
+#define WIFI_PASS "masihyanglama"     // WiFi Pass
 /**********************************************************************************/
 //Telegram Section
 //your Bot Token (Get from Botfather)
@@ -11,5 +11,8 @@
 /**********************************************************************************/
 // HW Config
 // GPIO Config
-#define mqPin A0 // ESP8266 Pin A0
+#define PHPin A0 // ESP8266 Pin A0
 #define dhtPin 14 // ESP8266 Pin D5 
+
+#define PHMax 7.5
+#define PHMin 6.5
