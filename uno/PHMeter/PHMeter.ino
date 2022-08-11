@@ -13,9 +13,10 @@ const char* ntpServer = "0.id.pool.ntp.org";
 const long  gmtOffset_sec = 25200; // GMT + 7
 char timeWeekDay[20];
 
-float phAir;
+float phAir, Amonia;
 bool PHTinggi = false;
 bool PHRendah = false;
+bool AmoniaTinggi = false;
 
 // Milis
 unsigned long previousMillis = 0;
@@ -57,6 +58,23 @@ void timeSetup() {
 }
 
 void loop() {
+  //  cek PH Air setiap 30 detik
+  unsigned long currentMillis = millis();
+  if (currentMillis - previousMillis >= 30000) {
+    // save the last time you blinked the LED
+    previousMillis = currentMillis;
+    bacaPH();
+    cekPH();
+    bacaAmonia();
+    cekAmonia();
+  }
+
+  checkPesan();
+  // wait 500 milliseconds
+  delay(500);
+}
+
+void checkPesan() {
   // a variable to store telegram message data
   TBMessage msg;
 
@@ -83,16 +101,6 @@ void loop() {
       }
     }
   }
-  //  cek PH Air setiap 30 detik
-  unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= 30000) {
-    // save the last time you blinked the LED
-    previousMillis = currentMillis;
-    bacaPH();
-    cekPH();
-  }
-  // wait 500 milliseconds
-  delay(500);
 }
 
 
@@ -112,7 +120,6 @@ void printLocalTime() {
     Serial.println("Failed to obtain time");
     return;
   }
-
   strftime(timeWeekDay, 20, "%X %x", &timeinfo);
   Serial.println(timeWeekDay);
 }
@@ -120,6 +127,11 @@ void printLocalTime() {
 void bacaPH() {
   phAir = random(645, 755) / 100.0;
   Serial.println("PH Saat ini => " + String(phAir));
+}
+
+void bacaAmonia() {
+  Amonia = random(0, 12) / 100.0;
+  Serial.println("Kadar Amonia Saat ini => " + String(Amonia));
 }
 
 void cekPH() {
@@ -138,5 +150,17 @@ void cekPH() {
     myBot.sendMessage(GroupID, "PH Air Telah Normal => " + String(phAir));
     PHTinggi = false;
     PHRendah = false;
+  }
+}
+
+void cekAmonia() {
+  if ((Amonia > amoniaMax) && !AmoniaTinggi) {
+    Serial.println("Kadar Amonia Tinggi");
+    myBot.sendMessage(GroupID, "Kadar Amonia Tinggi => " + String(Amonia));
+    AmoniaTinggi = true;
+  } else if ((Amonia < amoniaMax) && (AmoniaTinggi)) {
+    Serial.println("PH Air Telah Normal");
+    myBot.sendMessage(GroupID, "PH Air Telah Normal => " + String(phAir));
+    AmoniaTinggi = false;
   }
 }
