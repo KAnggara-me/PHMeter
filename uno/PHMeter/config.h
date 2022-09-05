@@ -11,10 +11,14 @@
 /**********************************************************************************/
 // HW Config
 // GPIO Config
-#define PHPin A0 // ESP8266 Pin A0
-#define dhtPin 14 // ESP8266 Pin D5 
+#define phPlus 13
+#define phMinus 14
+#define PHMeter 39
+#define MQPin 36
 
-#define PHMax 7.5
-#define PHMin 6.5
+#define CleanAir (3.6)
 
-#define amoniaMax 1
+#define PHMax (7.5)
+#define PHMin (6.5)
+
+#define amoniaMax (0.10)
