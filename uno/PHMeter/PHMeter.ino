@@ -50,7 +50,7 @@ void loop() {
     bacaAmonia();
     cekPH();
     cekAmonia();
-
+    LCDPrint(phAir, Amonia);
   }
   checkMsg();
   delay(500); // wait 500 milliseconds
@@ -111,7 +111,7 @@ void botSetup() {
   myBot.setTelegramToken(token);
 
   // TODO: For Developmen, Remove on Production
-  myBot.setIP("192.168.1.234", "192.168.1.1", "255.255.255.0", "8.8.8.8", "8.8.4.4");
+  //  myBot.setIP("192.168.1.234", "192.168.1.1", "255.255.255.0", "8.8.8.8", "8.8.4.4");
 
   // check if all things are ok
   if (myBot.testConnection()) {
@@ -243,14 +243,14 @@ void proccessMsg(int id, String msg) {
 // Read Water PH
 void bacaPH() {
   int measurings = 0;
-  for (int i = 0; i < 12; i++) {
+  for (int i = 0; i < 120; i++) {
     measurings += analogRead(PHMeter);
-    delay(10);
+    delay(25);
   }
-  float voltage = (float(measurings / 12) * (3.3 / 4095.0), 1) ;
-  phAir = ph(voltage);
-  // phAir = random(600, 800) / 100.0;
-  Serial.println("PH Saat ini => " + String(phAir) + " | RAW " + String(voltage));
+
+  float voltage = (measurings / 120) * (3.3 / 4095.0) ;
+  phAir = 7 + (2.61 - voltage) / 0.18; // voltage to PH
+  Serial.println("PH Saat ini => " + String(phAir) + " | Voltage " + String(voltage));
 }
 
 // Check Water PH
@@ -280,11 +280,6 @@ void cekPH() {
     PHTinggi = false;
     PHRendah = false;
   }
-}
-
-// Convert sensor value to PH
-float ph (float voltage) {
-  return 7 + (2.5 - voltage);
 }
 
 // Read MQ-135

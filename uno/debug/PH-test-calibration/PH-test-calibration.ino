@@ -1,5 +1,4 @@
-int pHpin = 39;
-float Voltage;
+#define pHpin 39
 
 void setup() {
   Serial.begin(115200);
@@ -8,19 +7,28 @@ void setup() {
 
 void loop() {
   int measurings = 0;
-  for (int i = 1; i <= 10; i++) {
+  for (int i = 1; i <= 120; i++) {
     measurings += analogRead(pHpin);
-    Serial.println(i);
-    delay(10);
+    delay(25);
   }
 
-  float voltage = (measurings / 10) * (3.3 / 4095.0);
-  float raw = analogRead(pHpin);
-  float phAir = ph(voltage);
+  float voltage = (measurings / 120) * (3.3 / 4095.0);
+  float raw = (measurings / 120);
+  float phAir = (7 + (2.61 - voltage) / 0.18);
   Serial.println("PH Saat ini => " + String(phAir) + " | V " + String(voltage) + " | RAW " + String(raw));
   delay(1000);
 }
 
-float ph (float voltage) {
-  return 7 + (2.5 - voltage);
-}
+//void loop() {
+//  int measurings = 0;
+//  for (int i = 1; i <= 120; i++) {
+//    measurings += analogRead(pHpin);
+//    Serial.println(analogRead(pHpin));
+//    delay(25);
+//  }
+//
+//  float raw = (measurings / 120);
+//
+//  Serial.println("Rata => " + String(raw));
+//  delay(500);
+//}

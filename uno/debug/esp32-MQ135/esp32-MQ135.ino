@@ -20,7 +20,7 @@ float getR0() {
     R0 += MQ.calibrate(CleanAir);
     Serial.print(".");
   }
-  return R0 / (sample * 1);
+  return R0 / (sample * 10);
 }
 
 void MQInit() {

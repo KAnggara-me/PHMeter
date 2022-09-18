@@ -1,7 +1,7 @@
 /**********************************************************************************/
 //WiFi Section
-#define WIFI_SSID "Kos_oren"  // WiFi Name
-#define WIFI_PASS "masihyanglama"     // WiFi Pass
+#define WIFI_SSID "KAnggara75v7"  // WiFi Name
+#define WIFI_PASS "duaakar3"     // WiFi Pass
 /**********************************************************************************/
 //Telegram Section
 //your Bot Token (Get from Botfather)
@@ -18,7 +18,7 @@
 
 #define CleanAir (3.6)
 
-#define PHMax (7.5)
-#define PHMin (6.5)
+#define PHMax (8.0)
+#define PHMin (6.0)
 
 #define amoniaMax (0.10)
