@@ -70,12 +70,12 @@ void lcdInit() {
   gpioInit();
   for (int i = 0; i <= 8; i++) {
     lcd.print(F("."));
-    delay(2000);
+    delay(1000);
   }
   lcd.setCursor(0, 1);
   for (int i = 0; i <= 8; i++) {
     lcd.print(F("."));
-    delay(2000);
+    delay(700);
   }
   lcd.clear();
   lcd.setCursor(0, 0);
@@ -109,9 +109,6 @@ void botSetup() {
 
   // Connect to Telegram Server
   myBot.setTelegramToken(token);
-
-  // TODO: For Developmen, Remove on Production
-  //  myBot.setIP("192.168.1.234", "192.168.1.1", "255.255.255.0", "8.8.8.8", "8.8.4.4");
 
   // check if all things are ok
   if (myBot.testConnection()) {
@@ -326,7 +323,7 @@ void kurangiPH() {
 }
 
 /*==============================================================================
-  =========================== PRINT TO LCD SECTION =====+=======================
+  =========================== PRINT TO LCD SECTION =============================
   ==============================================================================*/
 void LCDAmonia(float amonia) {
   lcd.clear();
